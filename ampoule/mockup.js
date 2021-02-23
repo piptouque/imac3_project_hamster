@@ -106,7 +106,7 @@ if(!stop){
 
 }
 else{
-	image(imgWin,0,0);
+	image(imgWin,0,0,701,327);
 }
 
   if (move && c<700){
