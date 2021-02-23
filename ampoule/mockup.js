@@ -14,9 +14,13 @@ var lightbulbWidth  = w * 0.1;
 var lightbulbHeight =  lightbulbWidth * 1.6;
 var lightbulbHeightOffset = 0.28;
 
+var stop = false;
+
 function preload(){
+  
   img = loadImage('assets/lamp.png');
   mask = loadImage('assets/lamp_mask2.png');
+  imgWin = loadImage('assets/BRAVO.png');
 }
 
 function setup() {
@@ -32,12 +36,24 @@ function setup() {
   //fill(c);
   noStroke();
   
+  //image(imgStart,0,0);
+  button = createButton("Bouge pour remplir l'ampoule ! Appuie sur l'écran pour commencer !");
+  button.size(w,h);
+  button.position(0, 0);
+  button.mousePressed(start);  
 }
+
+function start(){
+	button.hide();
+}
+
 function draw() {
   background(255,255,255);
   translate(video.width, 0);
   scale(-1,1);
   noTint();
+
+if(!stop){
   
   image(video,0, 0, video.width, video.height);
 
@@ -56,6 +72,7 @@ function draw() {
   
   image(img,0,0, lightbulbWidth, lightbulbHeight);
   image(p, 0, 0, lightbulbWidth, lightbulbHeight);
+  
   
  
   video.loadPixels();
@@ -87,13 +104,23 @@ function draw() {
     }
   }
 
+}
+else{
+	image(imgWin,0,0);
+}
 
   if (move && c<700){
     c = c+10;
+    console.log(c);
   }
   else if (c>0) {
-    c = c-10;
+    if (c>=500){
+  		
+  		stop = true;
+	}
+    c = c-10;	
   }
+
 
   prevFrame.copy(video, 0, 0, video.width, video.height, 0, 0, video.width, video.height); // Before we read the new frame, we always save the previous frame for comparison!
 
